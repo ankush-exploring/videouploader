@@ -48,10 +48,10 @@ const FileUpload = ({ onSuccess, onProgress, fileType }: FileUploadProps) => {
       const res = await upload({
         file,
         fileName: file.name,
-        publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
-        signature: auth.signature,
-        expire: auth.expire,
-        token: auth.token,
+        publicKey: auth.publicKey,
+        signature: auth.authenticationParameters.signature,
+        expire: auth.authenticationParameters.expire,
+        token: auth.authenticationParameters.token,
         onProgress: (event) => {
           if(event.lengthComputable && onProgress){
             const percent = (event.loaded / event.total) * 100;
