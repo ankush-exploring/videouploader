@@ -4,13 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useNotification } from "./Notification";
 import FileUpload from "./FileUpload";
-
-interface UploadResponse {
-  fileId: string;
-  name: string;
-  url: string;
-  filePath: string;
-}
+import { UploadResponse } from "@imagekit/next";
 
 export default function VideoUploadForm() {
 
