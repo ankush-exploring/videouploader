@@ -20,13 +20,13 @@ export default function VideoUploadForm() {
   const { showNotification } = useNotification();
 
   const onVideoUploadSuccess = (res: UploadResponse) => {
-    setVideoUrl(res.filePath ?? "");
+    setVideoUrl(res.filePath);
     setIsUploading(false);
     showNotification("Video uploaded successfully!", "success");
   };
 
   const onThumbnailUploadSuccess = (res: UploadResponse) => {
-    setThumbnailUrl(res.filePath ?? "");
+    setThumbnailUrl(res.filePath);
     setIsUploading(false);
     showNotification("Thumbnail uploaded successfully!", "success");
   };
