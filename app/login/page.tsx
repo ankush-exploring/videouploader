@@ -30,7 +30,7 @@ function LoginContent() {
         showNotification("Login successful!", "success");
         router.push("/");
       }
-    } catch (error) {
+    } catch {
       showNotification("An error occurred during login", "error");
     } finally {
       setIsLoading(false);
@@ -100,7 +100,7 @@ function LoginContent() {
 
               <div className="text-center">
                 <p className="text-sm text-base-content/70 mb-2">
-                  Don't have an account?
+                  Don&apos;t have an account?
                 </p>
                 <Link href="/register" className="link link-primary">
                   Create one now

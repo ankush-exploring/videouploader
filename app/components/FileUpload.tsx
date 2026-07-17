@@ -7,10 +7,10 @@ import {
   ImageKitUploadNetworkError,
   upload,
 } from "@imagekit/next";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 interface FileUploadProps {
-  onSuccess: (res: any) => void;
+  onSuccess: (res: unknown) => void;
   onProgress?: (progress: number) => void;
   fileType?: "image" | "video";
 }
@@ -76,6 +76,7 @@ const FileUpload = ({ onSuccess, onProgress, fileType }: FileUploadProps) => {
         onChange={handleFileChange}
       />
       {uploading && <span>Loading....</span>}
+      {error && <span className="text-error text-sm">{error}</span>}
     </>
   );
 };
