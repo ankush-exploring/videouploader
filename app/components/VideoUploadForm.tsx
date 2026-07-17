@@ -1,9 +1,9 @@
 "use client";
 
-import { IKUpload } from "imagekitio-next";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useNotification } from "./Notification";
+import FileUpload from "./FileUpload";
 
 interface UploadResponse {
   fileId: string;
@@ -13,8 +13,7 @@ interface UploadResponse {
 }
 
 export default function VideoUploadForm() {
-  const ikUploadRefVideo = useRef(null);
-  const ikUploadRefThumbnail = useRef(null);
+
   
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -38,9 +37,8 @@ export default function VideoUploadForm() {
     showNotification("Thumbnail uploaded successfully!", "success");
   };
 
-  const onUploadError = (err: any) => {
-    console.error("Upload error:", err);
-    showNotification("Upload failed. Please try again.", "error");
+  const onUploadError = (message: string) => {
+    showNotification(message || "Upload failed. Please try again.", "error");
     setIsUploading(false);
   };
 
@@ -142,13 +140,10 @@ export default function VideoUploadForm() {
           <span className="label-text font-semibold">Upload Video</span>
         </label>
         <div className="border-2 border-dashed border-base-300 rounded-lg p-6 hover:border-primary transition-colors">
-          <IKUpload
-            ref={ikUploadRefVideo}
-            fileName="video.mp4"
+          <FileUpload
+            fileType="video"
             onSuccess={onVideoUploadSuccess}
             onError={onUploadError}
-            accept="video/*"
-            isPrivateFile={false}
           />
           {videoUrl && (
             <div className="mt-4 text-success">
@@ -164,13 +159,10 @@ export default function VideoUploadForm() {
           <span className="label-text font-semibold">Upload Thumbnail</span>
         </label>
         <div className="border-2 border-dashed border-base-300 rounded-lg p-6 hover:border-primary transition-colors">
-          <IKUpload
-            ref={ikUploadRefThumbnail}
-            fileName="thumbnail.jpg"
+          <FileUpload
+            fileType="image"
             onSuccess={onThumbnailUploadSuccess}
             onError={onUploadError}
-            accept="image/*"
-            isPrivateFile={false}
           />
           {thumbnailUrl && (
             <div className="mt-4 text-success">
