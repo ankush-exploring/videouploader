@@ -13,10 +13,11 @@ import { useState } from "react";
 interface FileUploadProps {
   onSuccess: (res: UploadResponse) => void;
   onProgress?: (progress: number) => void;
+  onError?: (message: string) => void;
   fileType?: "image" | "video";
 }
 
-const FileUpload = ({ onSuccess, onProgress, fileType }: FileUploadProps) => {
+const FileUpload = ({ onSuccess, onProgress, onError, fileType }: FileUploadProps) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -63,7 +64,21 @@ const FileUpload = ({ onSuccess, onProgress, fileType }: FileUploadProps) => {
       });
       onSuccess(res)
     } catch (error) {
-        console.error("Upload failed", error)
+        const message =
+          error instanceof ImageKitInvalidRequestError
+            ? "Invalid upload request. Check your ImageKit keys."
+            : error instanceof ImageKitServerError
+            ? "ImageKit server error. Please try again."
+            : error instanceof ImageKitUploadNetworkError
+            ? "Network error during upload."
+            : error instanceof ImageKitAbortError
+            ? "Upload was cancelled."
+            : error instanceof Error
+            ? error.message
+            : "Upload failed. Please try again.";
+        console.error("Upload failed:", message, error)
+        setError(message);
+        onError?.(message);
     } finally {
         setUploading(false)
     }
